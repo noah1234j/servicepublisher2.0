@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "basic-ftp": "^2.13.2",
+    "date-and-time": "^0.6.2",
     "electron": "^2.0.8"
   }
 }

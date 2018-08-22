@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sermon Uploader</title>
+
+    <!--This is the google font Roboto, which is what is used for this project-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">   
+    
+    <!--This is the font awesome library, my favorite icon library-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+    <!--This is my custom css for the project-->
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+
+  <body>
+      <div class="container">
+          <article>
+              <section>
+                  <div class="header"> 
+                          <h1>Service Uploader</h1>
+                  </div>
+                  <div class="content">
+                  <table>
+                      <tr>
+                      <td><i class="fas fa-book-open"></i></td>
+                      <td><input type="text" id="sermonTitle" required placeholder="Service Name"><br></td>
+                      </tr>
+                      <tr>
+                      <td><i class="fas fa-user-alt"></i></td>
+                      <td><input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br></td>
+                      </tr>
+                      <tr>
+                      <td><i class="fas fa-sun"></i></td>
+                      <td><input type="text" id="amPm" required placeholder="AM or PM"></td>        
+                  </table>
+                  </div>
+              </section>
+          </article>
+          <button id="data">Start Transfer</button>
+      </div>
+
+      <script>
+      require('./app.js')
+      </script>
+  </body>
+</html>
