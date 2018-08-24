@@ -3,29 +3,32 @@ const ftp = require('basic-ftp')
 const config = require('./config')
 const fs = require('fs')
 
-main()
+//Starts the program when the button is clicked
+//document.getElementById('amPm').attachEvent('onclick', main()) 
+
+
+document.getElementById('begin').addEventListener('click', main)
 
 //Main function
-function main() {
-
-    //Starts everyting when the submit button is clicked
-    document.getElementById('data').addEventListener("click", () => {  
-
-        //Gets the sermon title
-        let title = get_title() 
-
-        //Downloads the sermon from the ftp
-        let bob = download()
-
-            //If download was successful...
-            //Renames everything
-        rename(title)
-
+async function main() {  
+    
+    //Gets the sermon title
+    let title = get_title() 
         
+    //Attempts to Download and returns the result
+    let results = await download()
 
-    })
+    //Logs Results
+    console.log(results)
 
+    //Error Handing
+    if (results === "Download Successful" || config.download_enabled) {
+        console.log('time to move on william')
+    } else {
+        console.log('Shutting Down Due to Critical Error')
+    }
 }
+
 
 //Function Definitions
 
@@ -45,7 +48,7 @@ function get_title() {
 }
 
 //Downloads the most recent .mov from bm Hyperdeck
-async function download() {
+function download() {
 
     //If download is enabled download, if not enabled don't
     if (config.download_enabled) {
@@ -56,58 +59,67 @@ async function download() {
         //If debug is on, enable ftp verbose (logs all ftp communicaiton)
         if (config.debug) {  client.ftp.verbose = true  }
 
-        //Error reporting
-        try {
+        return file_download()
 
-            //Makes the connections
-            await client.access({  host: config.download_ftp.host  })
+        //Defining the file download this needs to be async
+        async function file_download () {
+            try {
 
-            //Moves to the correct dir
-            await client.cd(config.video.pre_ptf)
+                //Makes the connections
+                await client.access({  host: config.download_ftp.host  })
+    
+                //Moves to the correct dir
+                await client.cd(config.video.pre_ptf)
+    
+                console.log('before')
 
-            //Gets a list of all files in the dir
-            var files = await client.list()
+                //Gets a list of all files in the dir
+                var files = await client.list()
+    
+                console.log('after')
 
-            //Defining some vars for the loop
-            let file_list = []
-            let n = 0
-
-            //Loops through the files
-            for (file in files) {
+                //Defining some vars for the loop
+                let file_list = []
+                let n = 0
+    
+                //Loops through the files
+                for (file in files) {
+                    
+                    //sorts out to only .mov
+                    (files[n].name.endsWith(config.video.pre_filter)) ? file_list.push(files[n].name) : null
+                    n++
+                }
+    
+                //This grabs the most recent .mov slices of the extension and sets it to a global var
+                file = file_list.slice(-1)[0].slice(0, -4)
+    
+                //Full file names and dirs of where its going and coming from
+                var local_file = config.video.pre_ptf + file + config.video.pre_filter
+                var remote_file = file + config.video.pre_filter
+    
+                //Telling the client what we are downloading
+                console.log("\n\r\n\r" + remote_file + " found to be downlaoded. Starting download now.\n\r\n\r")
+    
+                //Actually downloading it.
+                //await client.download(fs.createWriteStream(local_file), remote_file)
+    
+                //If we have issues, tell us what they are...
+            } catch (error) {
                 
-                //sorts out to only .mov
-                (files[n].name.endsWith(config.video.pre_filter)) ? file_list.push(files[n].name) : null
-                n++
+                //returns the error
+                return JSON.stringify(error)
+    
             }
-
-            //This grabs the most recent .mov slices of the extension and sets it to a global var
-            file = file_list.slice(-1)[0].slice(0, -4)
-
-            //Full file names and dirs of where its going and coming from
-            var local_file = config.video.pre_ptf + file + config.video.pre_filter
-            var remote_file = file + config.video.pre_filter
-
-            //Telling the client what we are downloading
-            console.log("\n\r\n\r" + remote_file + " found to be downlaoded. Starting download now.\n\r\n\r")
-
-            //Actually downloading it.
-            await client.download(fs.createWriteStream(local_file), remote_file)
-
-            //If we have issues, tell us what they are...
-        } catch (error) {
-            
-            //logging the error to the client
-            return error
-
+    
+            await client.close()
+            return "Download Successful"
         }
-        client.close()
-        return true
-
+    
+    //Error reporting
     } else {
 
         //If download is not enabled code here
-        console.log('\n\r\n\r  Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r')
-        return false
+        return "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r"
     }
 }
 
