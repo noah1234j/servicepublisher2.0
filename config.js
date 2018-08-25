@@ -1,7 +1,10 @@
 module.exports = {
 
     //Debugger Mode
+    //Sets FTP verbose to true, logging output to client. 
     debug: true,
+
+    encoder: 'open "/Applications/Adobe Media Encoder CC 2018/Adobe Media Encoder CC 2018.app"',
 
     //audio file option
     audio: {
@@ -45,6 +48,6 @@ module.exports = {
         host: "192.168.10.55",
         dir: "2",
         filter: ".mov"
-    }
+    },
 
 }

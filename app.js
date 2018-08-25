@@ -2,31 +2,43 @@ const date = require('date-and-time')
 const ftp = require('basic-ftp')
 const config = require('./config')
 const fs = require('fs')
+var cp = require('child_process')
+
 
 //Starts the program when the button is clicked
-//document.getElementById('amPm').attachEvent('onclick', main()) 
-
-
 document.getElementById('begin').addEventListener('click', main)
 
 //Main function
-async function main() {  
+async function main() { 
     
     //Gets the sermon title
-    let title = get_title() 
+    let title = get_title()
+
+    let results = await encode(title)
+
         
     //Attempts to Download and returns the result
-    let results = await download()
+    //let results = await download()
 
-    //Logs Results
-    console.log(results)
+    /*If the download was successful go on, else log the error
+    if (results == "Download Successful" || "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r") {
 
-    //Error Handing
-    if (results === "Download Successful" || config.download_enabled) {
-        console.log('time to move on william')
+        //Logs the results
+        console.log(results)
+
+        //Start Doing more cool stuff here
+        rename(title)
+        
+        encode()
+
+
+        
     } else {
-        console.log('Shutting Down Due to Critical Error')
+
+        //If download threw an error, log it to the client
+        console.log("A critical error was found... \n\r\n\r" + results)
     }
+    */
 }
 
 
@@ -67,16 +79,12 @@ function download() {
 
                 //Makes the connections
                 await client.access({  host: config.download_ftp.host  })
-    
+
                 //Moves to the correct dir
-                await client.cd(config.video.pre_ptf)
-    
-                console.log('before')
+                await client.cd(config.download_ftp.dir)
 
                 //Gets a list of all files in the dir
                 var files = await client.list()
-    
-                console.log('after')
 
                 //Defining some vars for the loop
                 let file_list = []
@@ -101,13 +109,13 @@ function download() {
                 console.log("\n\r\n\r" + remote_file + " found to be downlaoded. Starting download now.\n\r\n\r")
     
                 //Actually downloading it.
-                //await client.download(fs.createWriteStream(local_file), remote_file)
+                await client.download(fs.createWriteStream(local_file), remote_file)
     
                 //If we have issues, tell us what they are...
             } catch (error) {
                 
                 //returns the error
-                return JSON.stringify(error)
+                return JSON.stringify(error.message)
     
             }
     
@@ -126,27 +134,88 @@ function download() {
 //Rename service audio and video
 function rename(title) {
 
-    console.log("renaming")
-    console.log(title)
-    //This renames the Video
-    //fs.rename(config.video.pre_pft + file + config.video.pre_filter, config.video.pre_pft + title + config.video.pre_filter)
+    //Video... Grabs any mov files in the dir
+    fs.readdir(config.video.pre_ptf, (err, files) => {
 
-    /*This renames the audio
+        //Loops through them
+        files.forEach(file => {
+
+            //Filters out everything but video
+            if (file.endsWith(config.video.pre_filter)) {
+
+                //Renames to sermon title
+                fs.rename(config.video.pre_ptf + file, config.video.pre_ptf + title + config.video.pre_filter)
+
+            }
+        })
+    })
+
+    //Audio... Grabs any wavs files in the dir
     fs.readdir(config.audio.pre_ptf, (err, files) => {
 
-        //For all the files in the audio location do...
+        //Loops through them
         files.forEach(file => {
 
             //Filters out everything but wavs
             if (file.endsWith(config.audio.pre_filter)) {
-                
-                console.log(config.audio.pre_ptf + file)
-                console.log(config.audio.pre_ptf + title + config.audio.pre_filter)
-                //fs.rename(config.audio.pre_ptf + file)
+
+                //Renames to sermon title
+                fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter)
 
             }
+        })
+    })
 
-        });
-    })*/
+    return true
 }
 
+async function encode(title) {
+
+    //Starts the encoder
+    cp.exec(config.encoder)
+    
+    //Now we check when it's started
+    var started = false
+
+    var done = new Promise((resolve) => {
+
+        //Executes to see if media encoder is done ever 10 secs
+        var interval = setInterval(() => {
+
+            //THis block tells us when it's started
+            //Reads the directory where the video file is
+            fs.readdir(config.video.post_ptf, (err, files) => {
+
+                //Loops the the files in the video dir every 10 sec
+                for (n=0; n < files.length; n++) {
+
+                    //When we get a .tmp file set started to true
+                    if ((!started) && files[n].endsWith(".tmp")) {
+                        started = true
+                        console.log("started")
+                    }
+                }
+            })
+
+            //If it's started and not stopped
+            if (started && (!fs.existsSync(config.video.pre_ptf + title + config.video.pre_filter))) {
+
+                //Look for the source file being moved
+                console.log ('stopped')
+
+                //Stops this interval
+                clearInterval(interval)
+
+                //Alows the promise to be fulfilled
+                resolve("done")
+            }
+        }, 100)
+    })
+    
+    //Allows the main to move on to the next function only after we are done
+    return(await done)
+}
+
+function upload(title) {
+    //Ready to start upload
+}
