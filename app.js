@@ -3,7 +3,9 @@ const ftp = require('basic-ftp')
 const config = require('./config')
 const fs = require('fs')
 var cp = require('child_process')
-
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
 
 //Starts the program when the button is clicked
 document.getElementById('begin').addEventListener('click', main)
@@ -13,14 +15,11 @@ async function main() {
     
     //Gets the sermon title
     let title = get_title()
-
-    let results = await encode(title)
-
-        
+    
     //Attempts to Download and returns the result
-    //let results = await download()
+    let results = await download()
 
-    /*If the download was successful go on, else log the error
+    //If the download was successful go on, else log the error
     if (results == "Download Successful" || "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r") {
 
         //Logs the results
@@ -28,18 +27,21 @@ async function main() {
 
         //Start Doing more cool stuff here
         rename(title)
-        
-        encode()
 
+        //wait till encoding is done
+        await encode(title)
 
-        
+        //upload audio and video to the ftps
+        upload(title)
+
     } else {
 
         //If download threw an error, log it to the client
         console.log("A critical error was found... \n\r\n\r" + results)
     }
-    */
 }
+
+
 
 
 //Function Definitions
@@ -161,7 +163,6 @@ function rename(title) {
 
                 //Renames to sermon title
                 fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter)
-
             }
         })
     })
@@ -169,6 +170,7 @@ function rename(title) {
     return true
 }
 
+//Sets up the encode
 async function encode(title) {
 
     //Starts the encoder
@@ -192,7 +194,7 @@ async function encode(title) {
                     //When we get a .tmp file set started to true
                     if ((!started) && files[n].endsWith(".tmp")) {
                         started = true
-                        console.log("started")
+                        console.log("started encode")
                     }
                 }
             })
@@ -201,7 +203,7 @@ async function encode(title) {
             if (started && (!fs.existsSync(config.video.pre_ptf + title + config.video.pre_filter))) {
 
                 //Look for the source file being moved
-                console.log ('stopped')
+                console.log ('encode finished')
 
                 //Stops this interval
                 clearInterval(interval)
@@ -216,6 +218,95 @@ async function encode(title) {
     return(await done)
 }
 
-function upload(title) {
-    //Ready to start upload
+//sets up the upload
+async function upload(title) {
+
+    for (var server in config.upload_ftps) {
+
+        //Credentials
+        name = config.upload_ftps[server].name
+        host = config.upload_ftps[server].host
+        user = config.upload_ftps[server].user
+        pass = config.upload_ftps[server].pass
+        vid_dir = config.upload_ftps[server].vid_dir
+        aud_dir = config.upload_ftps[server].aud_dir
+
+   
+    //audio
+    var client = new ftp.Client
+
+            //net client
+            var client = new ftp.Client
+
+            //making the connection
+            await client.access ({
+                host: host,
+                user: user,
+                password: pass,
+                port: 21,
+            })
+
+            //change to the right directory
+            await client.cd(aud_dir)
+
+            //If Debug is on verbose the output of the ftp happenings
+            if (config.debug) { client.ftp.verbose = true }
+
+            //sets the local file to dir where the video is stored
+            var local_file = config.audio.post_ptf + title + config.audio.post_filter
+
+            //sets the remote file to the remote dir
+            var remote_file = title + config.audio.post_filter
+
+            //acutally upload
+            await client.upload(fs.createReadStream(local_file), remote_file)
+
+            console.log('audio upload successful')
+
+            //moves the file to uploaded
+            fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+
+            console.log('audio move done')
+
+        await client.close() //cleaning up 
+
+    //video
+    var client = new ftp.Client
+
+            //making the connection
+            await client.access ({
+                host: host,
+                user: user,
+                password: pass
+            })
+
+            //change to the right directory
+            await client.cd(vid_dir)
+
+            //If Debug is on verbose the output of the ftp happenings
+            if (config.debug) { client.ftp.verbose = true }
+
+            //sets the local file to dir where the video is stored
+            var local_file = config.video.post_ptf + title + config.video.post_filter
+
+            //sets the remote file to the remote dir
+            var remote_file = title + config.video.post_filter
+
+            //acutally downloading
+            await client.upload(fs.createReadStream(local_file), remote_file)
+
+            console.log('video upload successful')
+
+            fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+
+            console.log('video move done')
+
+    await client.close() //cleaning up
+    }   
 }
+
+//overrighting the console.log to log to log file
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
