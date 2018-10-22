@@ -1,10 +1,10 @@
 const date = require('date-and-time')
 const ftp = require('basic-ftp')
-const config = require('./config')
+const config = require('./src/js/config')
 const fs = require('fs')
 var cp = require('child_process')
 var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_file = fs.createWriteStream(__dirname + './logs/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 
 //Starts the program when the button is clicked
@@ -12,33 +12,37 @@ document.getElementById('begin').addEventListener('click', main)
 
 //Main function
 async function main() { 
+    var date = new Date();
+    console.log("\nStarted at " + date.getHours() + ":" + date.getMinutes()) 
     
     //Gets the sermon title
     let title = get_title()
+
+    title = "2018-10-21-AM-TS-Sunday Morning Service-Texas"
     
     //Attempts to Download and returns the result
-    let results = await download()
+    //let results = await download()
 
     //If the download was successful go on, else log the error
-    if (results == "Download Successful" || "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r") {
+    //if (results == "Download Successful" || "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r") {
 
         //Logs the results
-        console.log(results)
+        //console.log(results)
 
         //Start Doing more cool stuff here
-        rename(title)
+        //rename(title)
 
         //wait till encoding is done
-        await encode(title)
+        //await encode(title)
 
         //upload audio and video to the ftps
         upload(title)
 
-    } else {
+    //} else {
 
         //If download threw an error, log it to the client
-        console.log("A critical error was found... \n\r\n\r" + results)
-    }
+        //console.log("\nA critical error was found... \n\r\n\r" + results)
+    //}
 }
 
 
@@ -136,6 +140,8 @@ function download() {
 //Rename service audio and video
 function rename(title) {
 
+    console.log("\nRenaming Files....")
+
     //Video... Grabs any mov files in the dir
     fs.readdir(config.video.pre_ptf, (err, files) => {
 
@@ -144,6 +150,8 @@ function rename(title) {
 
             //Filters out everything but video
             if (file.endsWith(config.video.pre_filter)) {
+
+                console.log("\nRenaming Video File " + file)
 
                 //Renames to sermon title
                 fs.rename(config.video.pre_ptf + file, config.video.pre_ptf + title + config.video.pre_filter)
@@ -160,6 +168,8 @@ function rename(title) {
 
             //Filters out everything but wavs
             if (file.endsWith(config.audio.pre_filter)) {
+
+                console.log("\nRenaming Audio File " + file)
 
                 //Renames to sermon title
                 fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter)
@@ -194,7 +204,7 @@ async function encode(title) {
                     //When we get a .tmp file set started to true
                     if ((!started) && files[n].endsWith(".tmp")) {
                         started = true
-                        console.log("started encode")
+                        console.log("\nStarted Encode")
                     }
                 }
             })
@@ -203,7 +213,7 @@ async function encode(title) {
             if (started && (!fs.existsSync(config.video.pre_ptf + title + config.video.pre_filter))) {
 
                 //Look for the source file being moved
-                console.log ('encode finished')
+                console.log ('\nEncode Finished')
 
                 //Stops this interval
                 clearInterval(interval)
@@ -220,6 +230,7 @@ async function encode(title) {
 
 //sets up the upload
 async function upload(title) {
+    console.log("\n Preparing Upload")
 
     for (var server in config.upload_ftps) {
 
@@ -230,13 +241,17 @@ async function upload(title) {
         pass = config.upload_ftps[server].pass
         vid_dir = config.upload_ftps[server].vid_dir
         aud_dir = config.upload_ftps[server].aud_dir
-
    
     //audio
     var client = new ftp.Client
 
+        try {
+            console.log('\nAudio Upload to ')
+
             //net client
             var client = new ftp.Client
+
+            client.ftp.verbose = true
 
             //making the connection
             await client.access ({
@@ -249,9 +264,6 @@ async function upload(title) {
             //change to the right directory
             await client.cd(aud_dir)
 
-            //If Debug is on verbose the output of the ftp happenings
-            if (config.debug) { client.ftp.verbose = true }
-
             //sets the local file to dir where the video is stored
             var local_file = config.audio.post_ptf + title + config.audio.post_filter
 
@@ -261,18 +273,13 @@ async function upload(title) {
             //acutally upload
             await client.upload(fs.createReadStream(local_file), remote_file)
 
-            console.log('audio upload successful')
-
-            //moves the file to uploaded
-            fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
-
-            console.log('audio move done')
-
         await client.close() //cleaning up 
+        } finally {}
 
     //video
     var client = new ftp.Client
 
+        try {
             //making the connection
             await client.access ({
                 host: host,
@@ -284,7 +291,7 @@ async function upload(title) {
             await client.cd(vid_dir)
 
             //If Debug is on verbose the output of the ftp happenings
-            if (config.debug) { client.ftp.verbose = true }
+            client.ftp.verbose = true
 
             //sets the local file to dir where the video is stored
             var local_file = config.video.post_ptf + title + config.video.post_filter
@@ -295,14 +302,22 @@ async function upload(title) {
             //acutally downloading
             await client.upload(fs.createReadStream(local_file), remote_file)
 
-            console.log('video upload successful')
+            await client.close() //cleaning up
 
-            fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+        } finally {}
 
-            console.log('video move done')
-
-    await client.close() //cleaning up
+    var date = new Date();
+    console.log("\nAll done at " + date.getHours() + ":" + date.getMinutes()) 
     }   
+
+    console.log('\nVideo Upload Successful')
+    fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    console.log('\nVideo Move Done')
+
+    console.log('\nAudio Upload Successful')
+    fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    console.log('\nAudio Move Done')
+
 }
 
 //overrighting the console.log to log to log file

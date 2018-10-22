@@ -1,0 +1,46 @@
+
+Started at 8:17
+
+ Preparing Upload
+Connected to 12.247.246.50
+< 220 ProFTPD Server (Wolt_Texas_Server.local FTP Server) [::ffff:192.168.10.25]
+Login security: No encryption
+> USER william
+< 331 Password required for william
+> PASS ###
+< 230-Welcome to FreeNAS FTP Server
+< 230 User william logged in
+> TYPE I
+< 200 Type set to I
+> STRU F
+< 200 Structure set to F
+> CWD /01_Audio/
+< 250 CWD command successful
+Trying to find optimal transfer strategy...
+> EPSV
+< 229 Entering Extended Passive Mode (|||18207|)
+Optimal transfer strategy found.
+> STOR 2018-10-21-AM-TS-Sunday Morning Service-Texas.mp3
+< 150 Opening BINARY mode data connection for 2018-10-21-AM-TS-Sunday Morning Service-Texas.mp3
+Uploading (No encryption)
+< 226 Transfer complete
+
+Audio Upload Successful
+
+Audio Move Done
+Closing sockets.
+Trying to find optimal transfer strategy...
+> EPSV
+< 229 Entering Extended Passive Mode (|||19654|)
+Optimal transfer strategy found.
+> STOR 2018-10-21-AM-TS-Sunday Morning Service-Texas.mp4
+< 150 Opening BINARY mode data connection for 2018-10-21-AM-TS-Sunday Morning Service-Texas.mp4
+Uploading (No encryption)
+< 226 Transfer complete
+
+Video Upload Successful
+
+Video Move Done
+Closing sockets.
+
+All done at 8:29
