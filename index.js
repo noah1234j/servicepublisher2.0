@@ -1,5 +1,5 @@
 const {app, BrowserWindow} = require('electron')
-const config = require('./config')
+const config = require('./src/js/config')
 
 //global vars
 let win
