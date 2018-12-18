@@ -49,14 +49,10 @@ async function main() {
     //}
 }
 
-
-
-
 //Function Definitions
 
-
 //logging to log file
-log = function(d, e) { //
+log = function(d) { //
   log_file.write(util.format(d) + '\n');
   log_stdout.write(util.format(d) + '\n');
   if (config.debug) {console.log(d)}
