@@ -56,7 +56,7 @@ async function main() {
 
 
 //logging to log file
-log = function(d) { //
+log = function(d, e) { //
   log_file.write(util.format(d) + '\n');
   log_stdout.write(util.format(d) + '\n');
   if (config.debug) {console.log(d)}
