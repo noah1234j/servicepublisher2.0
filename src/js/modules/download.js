@@ -72,7 +72,7 @@ module.exports = () => {
                 log("\n\r\n\r" + remote_file + " found to be downlaoded. Starting download now.\n\r\n\r")
     
                 //Actually downloading it.
-                //await client.download(fs.createWriteStream(local_file), remote_file)
+                await client.download(fs.createWriteStream(local_file), remote_file)
 
                 // You guessed it trackProgress tracks the progress. I bet your friends call you Captain Obvious
                 client.trackProgress(info => log(info.bytesOverall))

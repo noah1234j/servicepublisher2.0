@@ -11,7 +11,8 @@
   "dependencies": {
     "basic-ftp": "^2.13.2",
     "date-and-time": "^0.6.2",
-    "electron": "^2.0.8"
+    "electron": "^2.0.8",
+    "is-windows": "^1.0.2"
   },
   "devDependencies": {
     "electron-builder": "^20.31.2"

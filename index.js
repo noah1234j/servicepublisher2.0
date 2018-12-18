@@ -13,7 +13,7 @@ function createWindow () {
     if (config.debug) {browserWidth = 750} else {browserWidth = 500}
 
     // Create the browser window.
-    win = new BrowserWindow({width: browserWidth, height: 560})
+    win = new BrowserWindow({width: browserWidth, height: 660})
 
     // and load the index.html of the app.
     win.loadFile('index.html')
@@ -28,4 +28,5 @@ function createWindow () {
       // when you should delete the corresponding element.
       win = null
     })
+
 }

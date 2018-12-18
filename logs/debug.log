@@ -1,13 +1,67 @@
 
-Started at 8:50
+Started at 13:9
+
+No need to create C:\Users\noaha\Documents\02_audio_capture\
+
+
+No need to create C:\Users\noaha\Documents\03_audio_encodes\
+
+
+No need to create C:\Users\noaha\Documents\04_video_capture\
+
+
+No need to create C:\Users\noaha\Documents\05_video_encodes\
+
 undefined
 
 
-Blackmagic HyperDeck Studio Mini[0008].mov found to be downlaoded. Starting download now.
+Blackmagic HyperDeck Studio Mini[0009].mov found to be downlaoded. Starting download now.
 
 
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 0,
+  'Transferred Overall': 0 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 1942528,
+  'Transferred Overall': 1942528 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 3825664,
+  'Transferred Overall': 3825664 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 5722112,
+  'Transferred Overall': 5722112 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 7543808,
+  'Transferred Overall': 7543808 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 9469952,
+  'Transferred Overall': 9469952 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 11325440,
+  'Transferred Overall': 11325440 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 13185024,
+  'Transferred Overall': 13185024 }
+{ File: 'Blackmagic HyperDeck Studio Mini[0009].mov',
+  Type: 'download',
+  Transferred: 14540897,
+  'Transferred Overall': 14540897 }
 Download Successful
 
 Started Encode
 
 Encode Finished
+
+ Preparing Upload
+
+Audio Upload to 
+
+All done at 13:10

@@ -11,6 +11,8 @@ const get_title = require('./src/js/modules/title')
 const download = require('./src/js/modules/download')
 const rename = require('./src/js/modules/rename')
 const encode = require('./src/js/modules/encode')
+const upload = require('./src/js/modules/upload')
+const assureDirs = require('./src/js/modules/createFolders')
 
 //Starts the program when the button is clicked
 document.getElementById('begin').addEventListener('click', main)
@@ -23,6 +25,9 @@ async function main() {
     //Gets the sermon title
     let title = get_title()
     console.log(title)
+
+    //Makes sure all the neccessary directories are in place
+    assureDirs()
     
     //Attempts to Download and returns the result
     let results = await download()

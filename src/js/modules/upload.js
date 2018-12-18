@@ -2,6 +2,8 @@ const ftp = require('basic-ftp')
 const config = require('../config')
 const fs = require('fs')
 
+module.exports = upload
+
 //sets up the upload
 async function upload(title) {
     log("\n Preparing Upload")
