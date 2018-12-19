@@ -10,87 +10,102 @@ async function upload(title) {
 
     for (var server in config.upload_ftps) {
 
-        //Credentials
-        name = config.upload_ftps[server].name
-        host = config.upload_ftps[server].host
-        user = config.upload_ftps[server].user
-        pass = config.upload_ftps[server].pass
-        vid_dir = config.upload_ftps[server].vid_dir
-        aud_dir = config.upload_ftps[server].aud_dir
+        //Connection info
+        var connection = {
+            host: config.upload_ftps[server].host,
+            user: config.upload_ftps[server].user,
+            password: config.upload_ftps[server].pass,
+            port: 21,
+
+        }
+
+        //Server info
+        var name = config.upload_ftps[server].name
+        var vid_dir = config.upload_ftps[server].vid_dir
+        var aud_dir = config.upload_ftps[server].aud_dir
+
+        //files
+        var audio_file = title + config.audio.post_filter
+        var audio_dir = config.audio.post_ptf + audio_file
+
+        var video_file = title + config.video.post_filter
+        var video_dir = config.video.post_ptf + video_file
    
     //audio
-    var client = new ftp.Client
+    //If there is an audio file to upload... 
+    if (!fs.existsSync(audio_file)) {
 
-        try {
-            log('\nAudio Upload to ')
+        //Open the session
+        var client = new ftp.Client
 
-            //net client
-            var client = new ftp.Client
+            try {
+                log('\nAudio Upload to ' + name)
+                var client = new ftp.Client
+                client.ftp.verbose = true
 
-            client.ftp.verbose = true
+                //making the connection
+                await client.access (connection)
 
-            //making the connection
-            await client.access ({
-                host: host,
-                user: user,
-                password: pass,
-                port: 21,
-            })
+                //change to the right directory
+                await client.cd(aud_dir)
 
-            //change to the right directory
-            await client.cd(aud_dir)
+                //acutally upload
+                await client.upload(fs.createReadStream(video_dir), video_file)
 
-            //sets the local file to dir where the video is stored
-            var local_file = config.audio.post_ptf + title + config.audio.post_filter
+            } catch(err) {
 
-            //sets the remote file to the remote dir
-            var remote_file = title + config.audio.post_filter
+                //tell us if there is an error
+                log('Audio Upload Error ' + err)
+            } finally {
+                await client.close() //cleaning up 
+            }
+        } else {
+            // If the file doesn't exist
+            log("Error No Audio File to Upload")
+        }
 
-            //acutally upload
-            await client.upload(fs.createReadStream(local_file), remote_file)
+    if (!fs.existsSync(audio_file)) {
 
-        await client.close() //cleaning up 
-        } finally {}
+        //video
+        var client = new ftp.Client
 
-    //video
-    var client = new ftp.Client
+            try {
+                //making the connection
+                await client.access (connection)
 
-        try {
-            //making the connection
-            await client.access ({
-                host: host,
-                user: user,
-                password: pass
-            })
+                //change to the right directory
+                await client.cd(vid_dir)
 
-            //change to the right directory
-            await client.cd(vid_dir)
+                //If Debug is on verbose the output of the ftp happenings
+                client.ftp.verbose = true
 
-            //If Debug is on verbose the output of the ftp happenings
-            client.ftp.verbose = true
+                //acutally downloading
+                await client.upload(fs.createReadStream(video_dir), video_file)
 
-            //sets the local file to dir where the video is stored
-            var local_file = config.video.post_ptf + title + config.video.post_filter
+                
 
-            //sets the remote file to the remote dir
-            var remote_file = title + config.video.post_filter
+            } catch(err) {
 
-            //acutally downloading
-            await client.upload(fs.createReadStream(local_file), remote_file)
+                //tell us if there is an error
+                log('Video Upload Error ' + err)
+            } finally {
+                await client.close() //cleaning up
+            }
+        } else {
 
-            await client.close() //cleaning up
-
-        } finally {}
+            //If there is no video file....
+            log('Error No Video File To Upload')
+        }
 
 
     }   
 
     log('\nVideo Upload Successful')
-    fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
     log('\nVideo Move Done')
 
     log('\nAudio Upload Successful')
-    fs.rename(local_file, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    fs.rename(audio_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
     log('\nAudio Move Done')
 
 }

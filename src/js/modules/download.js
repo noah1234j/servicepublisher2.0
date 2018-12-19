@@ -1,8 +1,7 @@
 const ftp = require('basic-ftp')
 const config = require('../config')
 const fs = require('fs')
-
-
+const $ = require('jquery')
 
 //Downloads the most recent .mov from bm Hyperdeck
 module.exports = () => {
@@ -12,16 +11,6 @@ module.exports = () => {
 
         // makes a new client object
         var client = new ftp.Client()
-
-        // Log progress for any transfer from now on.
-        client.trackProgress(info => {
-            log({
-                "File": info.name,
-                "Type": info.type,
-                "Transferred": info.bytes,
-                "Transferred Overall": info.bytesOverall
-            })
-        })
 
         //If debug is on, enable ftp verbose (logs all ftp communicaiton)
         client.ftp.verbose = true 
@@ -56,37 +45,53 @@ module.exports = () => {
                 //This grabs the most recent .mov slices of the extension and sets it to a global var
                 file = file_list.slice(-1)[0].slice(0, -4)
 
+                var file_size
+
                 //Finds the size of the file
-                var file_size = files.forEach((item) => {                      
+                files.forEach((item) => {  
                     if (item.name == file + config.video.pre_filter) {
-                        return file_size = item.size
+                        file_size = item.size
                     }
                 })
-    
-                log(file_size)
+
+
                 //Full file names and dirs of where its going and coming from
                 var local_file = config.video.pre_ptf + file + config.video.pre_filter
                 var remote_file = file + config.video.pre_filter
     
                 //Telling the client what we are downloading
                 log("\n\r\n\r" + remote_file + " found to be downlaoded. Starting download now.\n\r\n\r")
-    
+
+                //This is the progress tracker and progress bar updater see basic ftp docs for more info
+                client.trackProgress((info) => {
+                    //Gives the downloading message
+                    $('#progress p').text('Downloading...')
+
+                    //Gets the percent complete
+                    var percent = (Math.round(info.bytesOverall/file_size * 10000)/100).toString() + "%" // Gets the percent
+                    log(percent)
+                    $('#progress').css('width', percent)
+
+                })
+
                 //Actually downloading it.
                 await client.download(fs.createWriteStream(local_file), remote_file)
 
-                // You guessed it trackProgress tracks the progress. I bet your friends call you Captain Obvious
-                client.trackProgress(info => log(info.bytesOverall))
-    
+                //Get rid of the downloading message
+                $('#progress p').text('')
+
+                return true
+
+
                 //If we have issues, tell us what they are...
             } catch (error) {
                 
                 //returns the error
                 return JSON.stringify(error.message)
     
+            } finally {
+                await client.close()
             }
-    
-            await client.close()
-            return "Download Successful"
         }
     
     //Error reporting

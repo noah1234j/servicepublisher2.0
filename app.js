@@ -1,7 +1,5 @@
-const ftp = require('basic-ftp')
 const config = require('./src/js/config')
 const fs = require('fs')
-var cp = require('child_process')
 var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/logs/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
@@ -13,6 +11,7 @@ const rename = require('./src/js/modules/rename')
 const encode = require('./src/js/modules/encode')
 const upload = require('./src/js/modules/upload')
 const assureDirs = require('./src/js/modules/createFolders')
+require('./src/js/modules/downloadbar')
 
 //Starts the program when the button is clicked
 document.getElementById('begin').addEventListener('click', main)
@@ -20,7 +19,9 @@ document.getElementById('begin').addEventListener('click', main)
 //Main function
 async function main() { 
     var date = new Date();
-    log("\nStarted at " + date.getHours() + ":" + date.getMinutes()) 
+    var startHours = date.getHours()
+    var startMins = date.getMinutes()
+    log('Start Time ' + startHours + ":" + startMins) 
     
     //Gets the sermon title
     let title = get_title()
@@ -28,12 +29,9 @@ async function main() {
 
     //Makes sure all the neccessary directories are in place
     assureDirs()
-    
-    //Attempts to Download and returns the result
-    let results = await download()
 
     //If the download was successful go on, else log the error
-    //if (results == "Download Successful" || "Download has been disabled in config.js  \n\r  No files will be downloaded  \n\r\n\r") {
+    if (await download()) {
 
         //Logs the results
         log(results)
@@ -49,16 +47,17 @@ async function main() {
         upload(title)
 
         var date = new Date();
-        log("\nAll done at " + date.getHours() + ":" + date.getMinutes()) 
-
-    //}
+        var endHours = date.getHours()
+        var endMins = date.getMinutes()
+        log("Ended at " + endHours + ":" + endMins)
+    }
 }
 
 //Function Definitions
 
 //logging to log file
-log = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-  if (config.debug) {console.log(d)}
+log = function(a, b) { //
+  log_file.write(util.format(a) + '\n');
+  log_stdout.write(util.format(a) + '\n');
+  if (config.debug) {console.log(a)}
 };

@@ -12,7 +12,8 @@
     "basic-ftp": "^2.13.2",
     "date-and-time": "^0.6.2",
     "electron": "^2.0.8",
-    "is-windows": "^1.0.2"
+    "is-windows": "^1.0.2",
+    "jquery": "^3.3.1"
   },
   "devDependencies": {
     "electron-builder": "^20.31.2"

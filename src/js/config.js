@@ -1,5 +1,3 @@
-var isWindows = require('is-windows')
-
 var settings = {
 
     //Debugger Mode
