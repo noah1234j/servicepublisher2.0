@@ -1,6 +1,7 @@
 const config = require('./src/js/config')
 const fs = require('fs')
 var util = require('util');
+var $ = require('jquery')
 var log_file = fs.createWriteStream(__dirname + '/logs/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 
@@ -10,17 +11,17 @@ const download = require('./src/js/modules/download')
 const rename = require('./src/js/modules/rename')
 const encode = require('./src/js/modules/encode')
 const upload = require('./src/js/modules/upload')
-const assureDirs = require('./src/js/modules/createFolders')
+const assureDirs = require('./src/js/modules/assureDirs')
+const timeHandler = require('./src/js/modules/timeHandler')
 
 //Starts the program when the button is clicked
-document.getElementById('begin').addEventListener('click', main)
+//document.getElementById('begin').addEventListener('click', main)
+$('#begin').click(main)
 
 //Main function
 async function main() { 
-    var date = new Date();
-    var startHours = date.getHours()
-    var startMins = date.getMinutes()
-    log('Start Time ' + startHours + ":" + startMins) 
+
+    timeHandler.startTime()
     
     //Makes sure all the neccessary directories are in place
     assureDirs()
@@ -43,13 +44,8 @@ async function main() {
             //upload audio and video to the ftps
             await upload(title)
 
-            var date = new Date();
-            var endHours = date.getHours()
-            var endMins = date.getMinutes()
-            log("Ended at " + endHours + ":" + endMins)
-
-            log('Total time used ' + endHours-startHours + ":" + endMins-startMins)
-            
+            timeHandler.endTime()
+            timeHandler.elapsedTime()
         }
     }
     

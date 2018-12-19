@@ -5,10 +5,10 @@ module.exports = () => {
     //Assures the dirs are in place
     assureDir(config.audio.pre_ptf) //Audio Capture
     assureDir(config.audio.post_ptf)
-    assureDir(config.audio.post_ptf + "Uploaded\\") //Audio Encodes Uploaded
+    assureDir(config.audio.upload_ptf) //Audio Encodes Uploaded
     assureDir(config.video.pre_ptf) //Video Capture
     assureDir(config.video.post_ptf)
-    assureDir(config.video.post_ptf + "Uploaded\\") //Video Encodes
+    assureDir(config.video.upload_ptf) //Video Encodes
 
     //Sees if the dir exists, if it doenst it makes it
     function assureDir (dir) {
@@ -31,7 +31,7 @@ module.exports = () => {
         } else {
 
             //Tell us we don't need them
-            log('\r\n' + 'No need to create ' + dir + '\r\n')
+            //log('\r\n' + 'No need to create ' + dir + '\r\n')
         }
     }
 }

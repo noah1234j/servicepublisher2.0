@@ -33,7 +33,7 @@ async function upload(title) {
    
     //audio
     //If there is an audio file to upload... 
-    if (!fs.existsSync(audio_file)) {
+    if (fs.existsSync(audio_dir)) {
 
         //Open the session
         var client = new ftp.Client
@@ -64,7 +64,7 @@ async function upload(title) {
             log("Error No Audio File to Upload")
         }
 
-    if (!fs.existsSync(video_file)) {
+    if (fs.existsSync(video_dir)) {
 
         //video
         var client = new ftp.Client
@@ -102,10 +102,17 @@ async function upload(title) {
 
     }   
 
+    if (fs.existsSync(video_dir)) {
     fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
     log('\nVideo Move Done')
+    } else {
+        log('\n No video moved to \\Uploads because the file didn\'t exist')
+    }
 
-    fs.rename(audio_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
-    log('\nAudio Move Done')
-
+    if (fs.existsSync(audio_dir)) {
+        fs.rename(audio_dir, config.audio.post_ptf + "Uploaded/" + title + config.audio.post_filter, err => log(err))
+        log('\nAudio Move Done')
+    } else {
+        log('\n No audio moved to \\Uploads because the file didn\'t exist')
+    }
 }

@@ -9,18 +9,24 @@ exports.video = (title) => {
     //Video... Grabs any mov files in the dir
     fs.readdir(config.video.pre_ptf, (err, files) => {
 
-        //Loops through them
-        files.forEach(file => {
+        //err handling
+        if (err) {
+            log(err)
+        } else {
 
-            //Filters out everything but video
-            if (file.endsWith(config.video.pre_filter)) {
+            //Loops through them
+            files.forEach(file => {
 
-                console.log("\nRenaming Video File " + file)
+                //Filters out everything but video
+                if (file.endsWith(config.video.pre_filter)) {
 
-                //Renames to sermon title
-                fs.rename(config.video.pre_ptf + file, config.video.pre_ptf + title + config.video.pre_filter, (err) => {if (err) {throw err}})
-            }
-        })
+                    console.log("\nRenaming Video File " + file)
+
+                    //Renames to sermon title
+                    fs.rename(config.video.pre_ptf + file, config.video.pre_ptf + title + config.video.pre_filter, (err) => {if (err) {throw err}})
+                }
+            })
+        }
     })
 
     return true
@@ -31,19 +37,27 @@ exports.audio = (title) => {
     //Audio... Grabs any wavs files in the dir
     fs.readdir(config.audio.pre_ptf, (err, files) => {
 
-        //Loops through them
-        files.forEach(file => {
+        //err handling
+        if (err) {
+            log(err)
+        } else {
 
-            //Filters out everything but wavs
-            if (file.endsWith(config.audio.pre_filter)) {
+            //Loops through them
+            files.forEach(file => {
 
-                console.log("\nRenaming Audio File " + file)
+                //Filters out everything but wavs
+                if (file.endsWith(config.audio.pre_filter)) {
 
-                //Renames to sermon title
-                fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter, (err) => {if (err) {throw err}})
-            }
-        })
+                    console.log("\nRenaming Audio File " + file)
+
+                    //Renames to sermon title
+                    fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter, (err) => {if (err) {throw err}})
+                }
+            })
+            
+
+        }
+
     })
-
     return true
 }

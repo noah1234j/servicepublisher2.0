@@ -1,10 +1,12 @@
+const os = require('os')
+
 var settings = {
 
     //Debugger Mode
     //Sets FTP verbose to true, logging output to client. 
     debug: true,
 
-    encoder: ,
+    encoder: "refer to bottom",
 
     //audio file option
     audio: {
@@ -26,6 +28,8 @@ var settings = {
         //This is where media encoder dumps the finished product
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH        
         post_ptf: "refer to bottom, set dynamically based on os",
+
+        upload: "refer to bottom"
     },
 
     //Video option
@@ -45,7 +49,9 @@ var settings = {
 
         //This is where media encoder dumps the finished product
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH
-        post_ptf: "refer to bottom, set dynamically based on os"
+        post_ptf: "refer to bottom, set dynamically based on os",
+
+        upload_ptf: "refer to bottom"
     },
 
     //Download Options
@@ -76,17 +82,43 @@ var settings = {
     }
 }
 
-//Handles windows vs mac Home Dir
-let homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+//Handles windows vs mac
+let homeDir, slash, encoder
 
-settings.audio.post_ptf = homeDir + '\\Documents\\03_audio_encodes\\'
-settings.audio.pre_ptf = homeDir + '\\Documents\\02_audio_capture\\'
-settings.video.pre_ptf = homeDir + '\\Documents\\04_video_capture\\'
-settings.video.post_ptf = homeDir + '\\Documents\\05_video_encodes\\'
+    if (os.platform() == 'win32') {
+
+        //If windows
+        console.log("\r\n You're on a windows!!!")
+        homeDir = os.homedir()
+        slash = "\\"
+
+        //encoder command
+        encoder = 'start C:/"Program Files"/Adobe/"Adobe Media Encoder CC 2018"/"Adobe Media Encoder.exe"'
+
+    } else if (os.platform() == 'darwin'){
+        
+        //If MacOS
+        console.log("Ok, we'll go with macOS, as its our only other supported platform")
+        homeDir = os.homedir()
+        slash = "/"
+
+        //encoder command
+        encoder = 'open "/Applications/Adobe Media Encoder CC 2018/Adobe Media Encoder CC 2018.app"'
+
+     } else {
+
+        //No other platform currently supported
+         console.log('not a supported platform')
+     }
+
+settings.audio.post_ptf = homeDir + slash + 'Documents' + slash + '03_audio_encodes' + slash
+settings.audio.pre_ptf = homeDir + slash + 'Documents' + slash + '02_audio_capture' + slash
+settings.video.pre_ptf = homeDir + slash + 'Documents' + slash + '04_video_capture' + slash
+settings.video.post_ptf = homeDir + slash + 'Documents' + slash + '05_video_encodes' + slash
+settings.audio.upload_ptf = homeDir + slash + 'Documents' + slash + '03_audio_encodes' + slash + "Uploaded"
+settings.video.upload_ptf = homeDir + slash + 'Documents' + slash + '05_video_encodes' + slash + "Uploaded"
 
 //Handles windows vs mac Media encoder Open
-let encoder = process.env[(process.platform == 'win32') ? 'start C:/"Program Files"/Adobe/"Adobe Media Encoder CC 2018"/"Adobe Media Encoder.exe"' : 'open "/Applications/Adobe Media Encoder CC 2018/Adobe Media Encoder CC 2018.app"']
-
 settings.encoder = encoder
 
 module.exports = settings
