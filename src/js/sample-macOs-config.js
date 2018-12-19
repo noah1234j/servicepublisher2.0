@@ -1,10 +1,10 @@
-var settings = {
+module.exports = {
 
     //Debugger Mode
     //Sets FTP verbose to true, logging output to client. 
     debug: true,
 
-    encoder: ,
+    encoder: 'open "/Applications/Adobe Media Encoder CC 2018/Adobe Media Encoder CC 2018.app"',
 
     //audio file option
     audio: {
@@ -19,13 +19,11 @@ var settings = {
         //This is where our video sits before running through media encoder
         //Media encoder watch folder needs to be pointed here
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH
-
-        //If windows use %HOMEPATH%/docuemnts if macos use ~
-        pre_ptf: "refer to bottom, set dynamically based on os",
+        pre_ptf: "/Users/wolt/Documents/02_audio_capture/",
 
         //This is where media encoder dumps the finished product
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH        
-        post_ptf: "refer to bottom, set dynamically based on os",
+        post_ptf: "/Users/wolt/Documents/03_audio_encodes/",
     },
 
     //Video option
@@ -41,11 +39,11 @@ var settings = {
         //This is where our video sits before running through media encoder
         //Media encoder watch folder needs to be pointed here
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH
-        pre_ptf: "refer to bottom, set dynamically based on os",
+        pre_ptf: "/Users/wolt/Documents/04_video_capture/",
 
         //This is where media encoder dumps the finished product
         //REMBER TO PUT A / AT THE END OF THE FOLDER PATH
-        post_ptf: "refer to bottom, set dynamically based on os"
+        post_ptf: "/Users/wolt/Documents/05_video_encodes/"
     },
 
     //Download Options
@@ -74,19 +72,5 @@ var settings = {
             aud_dir: "/01_Audio/"
         }
     }
+
 }
-
-//Handles windows vs mac Home Dir
-let homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-
-settings.audio.post_ptf = homeDir + '\\Documents\\03_audio_encodes\\'
-settings.audio.pre_ptf = homeDir + '\\Documents\\02_audio_capture\\'
-settings.video.pre_ptf = homeDir + '\\Documents\\04_video_capture\\'
-settings.video.post_ptf = homeDir + '\\Documents\\05_video_encodes\\'
-
-//Handles windows vs mac Media encoder Open
-let encoder = process.env[(process.platform == 'win32') ? 'start C:/"Program Files"/Adobe/"Adobe Media Encoder CC 2018"/"Adobe Media Encoder.exe"' : 'open "/Applications/Adobe Media Encoder CC 2018/Adobe Media Encoder CC 2018.app"']
-
-settings.encoder = encoder
-
-module.exports = settings
