@@ -55,7 +55,7 @@ async function upload(title) {
             } catch(err) {
 
                 //tell us if there is an error
-                log('Audio Upload Error ' + err)
+                log('Audio Upload Error ' + JSON.stringify(err))
             } finally {
                 await client.close() //cleaning up 
             }
@@ -64,12 +64,14 @@ async function upload(title) {
             log("Error No Audio File to Upload")
         }
 
-    if (!fs.existsSync(audio_file)) {
+    if (!fs.existsSync(video_file)) {
 
         //video
         var client = new ftp.Client
 
             try {
+                log('\nVideo Upload to ' + name)
+
                 //making the connection
                 await client.access (connection)
 
@@ -100,12 +102,10 @@ async function upload(title) {
 
     }   
 
-    log('\nVideo Upload Successful')
-    fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
     log('\nVideo Move Done')
 
-    log('\nAudio Upload Successful')
-    fs.rename(audio_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter)
+    fs.rename(audio_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
     log('\nAudio Move Done')
 
 }

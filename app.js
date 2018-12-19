@@ -11,7 +11,6 @@ const rename = require('./src/js/modules/rename')
 const encode = require('./src/js/modules/encode')
 const upload = require('./src/js/modules/upload')
 const assureDirs = require('./src/js/modules/createFolders')
-require('./src/js/modules/downloadbar')
 
 //Starts the program when the button is clicked
 document.getElementById('begin').addEventListener('click', main)
@@ -23,40 +22,43 @@ async function main() {
     var startMins = date.getMinutes()
     log('Start Time ' + startHours + ":" + startMins) 
     
-    //Gets the sermon title
-    let title = get_title()
-    console.log(title)
-
     //Makes sure all the neccessary directories are in place
     assureDirs()
 
-    //If the download was successful go on, else log the error
-    if (await download()) {
+    //Gets the sermon title
+    let title = get_title()
 
-        //Logs the results
-        log(results)
+    if (title) {
 
-        //Start Doing more cool stuff here
-        rename.audio(title)
-        rename.video(title)
+        //If the download was successful go on, else log the error
+        if (await download()) {
 
-        //wait till encoding is done
-        await encode(title)
+            //Start Doing more cool stuff here
+            rename.audio(title)
+            rename.video(title)
 
-        //upload audio and video to the ftps
-        upload(title)
+            //wait till encoding is done
+            await encode(title)
 
-        var date = new Date();
-        var endHours = date.getHours()
-        var endMins = date.getMinutes()
-        log("Ended at " + endHours + ":" + endMins)
+            //upload audio and video to the ftps
+            await upload(title)
+
+            var date = new Date();
+            var endHours = date.getHours()
+            var endMins = date.getMinutes()
+            log("Ended at " + endHours + ":" + endMins)
+
+            log('Total time used ' + endHours-startHours + ":" + endMins-startMins)
+            
+        }
     }
+    
 }
 
 //Function Definitions
 
 //logging to log file
-log = function(a, b) { //
+log = function(a) { //
   log_file.write(util.format(a) + '\n');
   log_stdout.write(util.format(a) + '\n');
   if (config.debug) {console.log(a)}

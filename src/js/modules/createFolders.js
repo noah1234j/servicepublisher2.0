@@ -3,10 +3,12 @@ const config = require('../config')
 
 module.exports = () => {
     //Assures the dirs are in place
-    assureDir(config.audio.pre_ptf)
+    assureDir(config.audio.pre_ptf) //Audio Capture
     assureDir(config.audio.post_ptf)
-    assureDir(config.video.pre_ptf)
+    assureDir(config.audio.post_ptf + "Uploaded\\") //Audio Encodes Uploaded
+    assureDir(config.video.pre_ptf) //Video Capture
     assureDir(config.video.post_ptf)
+    assureDir(config.video.post_ptf + "Uploaded\\") //Video Encodes
 
     //Sees if the dir exists, if it doenst it makes it
     function assureDir (dir) {

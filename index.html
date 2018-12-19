@@ -3,10 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Sermon Uploader</title>
-
-    <!--This is the google font Roboto, which is what is used for this project-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">   
+    <title>Sermon Uploader</title>  
     
     <!--This is the font awesome library, my favorite icon library-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -18,25 +15,23 @@
 
   <body>
       <div class="container">
+            <div id="settings-container"><i class="fas fa-sliders-h"></i></div>
           <div id="content">
           <article>
               <section>
                   <div class="header"> 
-                          <h1>Service Uploader</h1>
+                          <h1>Service Uploader</h1> 
                   </div>
                   <div class="content">
-                  <table>
-                      <tr>
-                      <td><i class="fas fa-book-open"></i></td>
-                      <td><input type="text" id="sermonTitle" required placeholder="Service Name"><br></td>
-                      </tr>
-                      <tr>
-                      <td><i class="fas fa-user-alt"></i></td>
-                      <td><input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br></td>
-                      </tr>
-                      <tr>
-                      <td><i class="fas fa-sun"></i></td>
-                      <td><input type="text" id="amPm" required placeholder="AM or PM"></td>        
+                  <input type="text" id="sermonTitle" required placeholder="Service Name">
+                  <input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br>
+                  <table class="radio-table">
+                        <tr>
+                                <td><input type="radio" name="demo" value="AM" class="form-radio" ><label for="radio-one">AM</label></td>
+                  
+                                <td><input type="radio" name="demo" value="PM" class="form-radio" ><label for="radio-one">PM</label></td>
+                          </tr>
+           
                   </table>
                   </div>
               </section>
@@ -46,7 +41,8 @@
       </div>
 
       <div id="progress-bar">
-          <div id="progress"><p></p></div>
+          <div id="progress"><ul><li id="name"></li><li id="percent"></li></ul></div>
+
       </div>
 
       <script>

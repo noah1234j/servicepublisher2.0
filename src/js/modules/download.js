@@ -65,11 +65,12 @@ module.exports = () => {
                 //This is the progress tracker and progress bar updater see basic ftp docs for more info
                 client.trackProgress((info) => {
                     //Gives the downloading message
-                    $('#progress p').text('Downloading...')
+                    $('#name').text('Downloading...')
 
                     //Gets the percent complete
                     var percent = (Math.round(info.bytesOverall/file_size * 10000)/100).toString() + "%" // Gets the percent
                     log(percent)
+                    $('#percent').text(percent)
                     $('#progress').css('width', percent)
 
                 })
@@ -78,7 +79,8 @@ module.exports = () => {
                 await client.download(fs.createWriteStream(local_file), remote_file)
 
                 //Get rid of the downloading message
-                $('#progress p').text('')
+                $('#progress p').text.hide()
+                $('#progress').css('width', '0%')
 
                 return true
 

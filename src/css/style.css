@@ -7,17 +7,14 @@ body {
 h1 {
     margin: 0;
     letter-spacing: 1px;
-    font-size: 1.25em;
-    font-weight: bold;
+    font: 300 23px/1.7 'Open Sans', sans-serif;
 }
 div.header {
     background: #39434e;
     color: #f0f5f7;
-    font-size: 12;
+    font: 300 'Open Sans', sans-serif;
     text-align: center;
     padding: 25px;
-    border-radius: 15px 15px 0 0 ;
-    font-family: system-ui;
 }
 section {
   margin: 0 auto;
@@ -31,23 +28,20 @@ div.content {
     padding: 30px;
 }
 input::-webkit-input-placeholder {
-    font-weight: 400;
     padding: 0 10px;
-    font-size: 20px;
+    font: 300 18px/1.7 'Open Sans', sans-serif;
+
 }
-input {
+input[type="text"] {
     border: none;
-    width: 200px;
-    height: 25px;
-    color: grey;
-    font-size: 20px;
-    padding: 0 10px;
+    width: 80%;
+    height: 40px;
+    text-align:center;
+    margin: 10%;
+    font: 300 22px/1.7 'Open Sans', sans-serif;
+
 }
-i {
-    color: #546876;
-    margin-left: 15px;
-    font-weight: 25pt;
-}
+
 button {
     background-color: #f98241;
     color: white;
@@ -57,22 +51,15 @@ button {
     font-size: 1em;
     padding: 25px;
     width: 400px;
-    border-radius: 0 0 15px 15px
-}
-td {
-    padding: 20px 0;
-}
-.fas {
-    font-size: 35px;
 }
 
 #content {
     margin: 0 auto;
     width: 400px;
-    border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/* Input Stying */
 input:focus {
     outline:none;
 }
@@ -80,8 +67,8 @@ input:focus {
 /* Progress Stuff */
 #progress-bar {
     width: 100%;
-    height: 25px;
-    margin-top: 83px
+    height: 60px;
+    margin-top: 48px
 }
 
 #progress {
@@ -91,9 +78,81 @@ input:focus {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-#progress p {
-    color: white;
+#progress li {
+    display: inline;
+    color: #39434e;
     font-family: system-ui;
-    padding: 5px;
+    font-weight: bold;
+    padding: 0px;
     text-align: left;
+    margin-left: 20px
+}
+
+/*Radio Button Stuff */
+.form-radio
+{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     background-color: #f1f1f1;
+     color: #666;
+     top: 10px;
+     height: 30px;
+     width: 30px;
+     border: 0;
+     border-radius: 50px;
+     cursor: pointer;     
+     margin-right: 7px;
+     outline: none;
+}
+.form-radio:checked::before
+{
+     position: absolute;
+     font: 13px/1 'Open Sans', sans-serif;
+     left: 11px;
+     top: 7px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.form-radio:hover
+{
+     background-color: #f7f7f7;
+}
+.form-radio:checked
+{
+     background-color: #f1f1f1;
+}
+label
+{
+     font: 300 16px/1.7 'Open Sans', sans-serif;
+     color: #666;
+     cursor: pointer;
+} 
+
+.radio-table {
+    width: 100%;
+}
+
+td {
+    padding: 20px 0px 30px 0px;
+}
+
+/*Settings Icon*/
+
+#settings-container {
+    background: #39434e;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 12px;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.fa-sliders-h {
+
+    color: white;
+    font-size: 20px;
 }

@@ -1,6 +1,7 @@
 const config = require('../config')
 const fs = require('fs')
 var cp = require('child_process')
+var $ = require('jquery')
 
 //Sets up the encode
 module.exports = encode
@@ -38,6 +39,8 @@ async function encode(title) {
 
             //If it's started and not stopped
             if (started && (!fs.existsSync(config.video.pre_ptf + title + config.video.pre_filter))) {
+
+
 
                 //Look for the source file being moved
                 log ('\nEncode Finished')
