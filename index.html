@@ -4,44 +4,137 @@
   <head>
     <meta charset="UTF-8">
     <title>Sermon Uploader</title>  
-    
     <!--This is the font awesome library, my favorite icon library-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    
-    <!--This is my custom css for the project-->
-    <link rel="stylesheet" href="./src/css/style.css">
-
+    <link rel="stylesheet" href="./src/css/style.css"><!--This is my custom css for the project-->
   </head>
 
-  <body>
-      <div class="container">
-        <div id="settings-container"><i class="fas fa-sliders-h"></i></div>
-          <div id="content">
-                  <div class="header"> 
-                          <h1>Service Uploader</h1> 
-                  </div>
-                  <div class="content">
-                  <input type="text" id="sermonTitle" required placeholder="Service Name">
-                  <input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br>
-                  <table class="radio-table">
-                        <tr>
-                            <td><input type="radio" name="demo" value="AM" class="form-radio" ><label for="radio-one">AM</label></td>
-                            <td><input type="radio" name="demo" value="PM" class="form-radio" ><label for="radio-one">PM</label></td>
-                          </tr>
-           
-                  </table>
-                  </div>
-            <button id="begin"><h1>Start Transfer</h1></button>
+<body>
+  <!--Main Content-->
+  <div id="settings-btn"><i class="fas fa-sliders-h"></i></div>
+  <div class="main-page"></div>
+    <div class="main-content">
+      <div class="header"> 
+              <h1>Service Uploader</h1> 
+      </div>
+      <div class="content">
+        <input type="text" id="sermonTitle" required placeholder="Service Name">
+        <input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br>
+        <table class="radio-table">
+              <tr>
+                  <td><input type="radio" name="demo" value="AM" class="form-radio" ><label for="radio-one">AM</label></td>
+                  <td><input type="radio" name="demo" value="PM" class="form-radio" ><label for="radio-one">PM</label></td>
+                </tr>
+        </table>
+      </div>
+      <button id="begin"><h1>Start Transfer</h1></button>
+    </div>
+  </div>
+
+  <!--Progress Bar-->
+  <div id="progress-bar">
+      <div id="progress"><p id="name"><p id="percent"></p></div>
+  </div>
+
+  <!--Settings-->
+  <div class="settings">
+    <div class="settings-overlay"></div>
+
+    <div class="main-content">
+        <div class="header">
+          <h1>Settings</h1>
+          <div class="cancel-btn btn failure btn-abs"><i class="fas fa-times"></i></div>
+          <div class="save-btn btn success btn-abs"><i class="fas fa-check"></i></div>
+
+        </div>
+        <div class="content">
+
+          <h3>//Location Settings</h3>
+
+          <label for="settings-text">Meida Encoder Location</label>
+          <input type="text" class="settings-text" placeholder="/home/app/media encoder">
+
+          <label for="settings-text">Audio Pre Encode</label>
+          <input type="text" class="settings-text">
+          
+          <label for="settings-text">Audio Post Encode</label>
+          <input type="text" class="settings-text">
+
+          <label for="settings-text">Video Pre Encode</label>
+          <input type="text" class="settings-text">
+
+          <label for="settings-text">Video Post Encode</label>
+          <input type="text" class="settings-text">
+          
+          <h3>//File Settings</h3>
+
+          <label for="settings-text">Audio Pre Encode</label>
+          <input type="text" class="settings-text" placeholder=".wav">
+
+          <label for="settings-text">Audio Post Encode</label>
+          <input type="text" class="settings-text" placeholder=".mp3">
+          
+          <label for="settings-text">Audio Post Encode</label>
+          <input type="text" class="settings-text" placeholder=".mov">
+
+          <label for="settings-text">Video Pre Encode</label>
+          <input type="text" class="settings-text" placeholder=".mp4">
+
+          <h3>//Admin Settings</h3>
+
+          <label for="check-one">Debug</label><input type="checkbox" class="form-checkbox" id="check-one">
+
+
+          <h3>//Hyperdeck Settings</h3>
+
+          <label for="settings-text">Host</label>
+          <input type="text" class="settings-text" placeholder="192.168.10.123">
+
+          <label for="settings-text">Directory</label>
+          <input type="text" class="settings-text" placeholder="/2">
+
+          <label for="settings-text">Download Filter</label>
+          <input type="text" class="settings-text" placeholder=".mov">
+
+          
+          <h3>//Servers</h3>
+
+          <div class="servers">
+            <h5>//Server 1</h5>
+
+            <label for="settings-text">Name</label>
+            <input type="text" class="settings-text" placeholder=".wav">
+
+            <label for="check-one">Enabled</label><input type="checkbox" class="form-checkbox" id="check-one"><br><br>
+
+            <label for="settings-text">Host</label>
+            <input type="text" class="settings-text" placeholder=".mp3">
+            
+            <label for="settings-text">User</label>
+            <input type="text" class="settings-text" placeholder=".mov">
+
+            <label for="settings-text">Password</label>
+            <input type="password" class="settings-text" placeholder=".mp4">
+
+            <label for="settings-text">Video Directory</label>
+            <input type="text" class="settings-text" placeholder=".mp4">
+
+            <label for="settings-text">Audio Directory</label>
+            <input type="text" class="settings-text" placeholder=".mp4">
+
+            <div class="btn add-server success"><i class="fas fa-plus"></i></div>
+            <div class="btn remove-server failure"><i class="fas fa-minus"></i></div>
+
           </div>
-      </div>
 
-      <div id="progress-bar">
-          <div id="progress"><p id="name"><p id="percent"></p></div>
+        </div>
+    </div>
+  </div>
 
-      </div>
-
-      <script>
-      require('./app.js') 
-      </script>
-  </body>
+  <!--Scripts-->
+    <script>
+      require('./settings.js')
+      //require('./app.js') 
+    </script>
+</body>
 </html>

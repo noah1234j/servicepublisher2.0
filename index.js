@@ -13,7 +13,7 @@ function createWindow () {
     if (config.debug) {browserWidth = 750} else {browserWidth = 500}
 
     // Create the browser window.
-    win = new BrowserWindow({width: browserWidth, height: 660})
+    win = new BrowserWindow({width: browserWidth, height: 800})
 
     // and load the index.html of the app.
     win.loadFile('index.html')

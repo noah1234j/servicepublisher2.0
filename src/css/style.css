@@ -9,11 +9,26 @@ h1 {
     letter-spacing: 1px;
     font: 300 23px/1.7 'Open Sans', sans-serif;
 }
-div.header {
+
+h3 {
+    margin: 0;
+    letter-spacing: 1px;
+    font: 300 21px/1.7 'Open Sans', sans-serif;
+    margin-bottom: 15px;
+}
+
+h5 {
+    margin: 0;
+    letter-spacing: 1px;
+    font: 300 16px/1.7 'Open Sans', sans-serif;
+}
+
+.header {
     background: #39434e;
     color: #f0f5f7;
     font: 300 'Open Sans', sans-serif;
     text-align: center;
+    z-index: 10;
     padding: 25px;
 }
 section {
@@ -22,7 +37,7 @@ section {
   width: 400px;
 
 }
-div.content {
+.content {
     text-align: center;
     background-color: white;
     padding: 30px;
@@ -30,15 +45,6 @@ div.content {
 input::-webkit-input-placeholder {
     padding: 0 10px;
     font: 300 18px/1.7 'Open Sans', sans-serif;
-
-}
-input[type="text"] {
-    border: none;
-    width: 80%;
-    height: 20px;
-    text-align:center;
-    margin: 10%;
-    font: 300 22px/1.7 'Open Sans', sans-serif;
 
 }
 
@@ -53,9 +59,12 @@ button {
     width: 400px;
 }
 
-#content {
+.main-content {
+    margin-top: 100px !important;
     margin: 0 auto;
     width: 400px;
+    left: 0;
+    right: 0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -81,7 +90,7 @@ input:focus {
 #progress p {
     display: inline;
     color: #39434e;
-    font-family: system-ui;
+    font-family: 'Open Sans';
     font-weight: bold;
     padding: 0px;
     text-align: left;
@@ -89,7 +98,7 @@ input:focus {
 }
 
 /*Radio Button Stuff */
-.form-radio
+.form-radio, .form-checkbox
 {
      -webkit-appearance: none;
      -moz-appearance: none;
@@ -107,7 +116,7 @@ input:focus {
      margin-right: 7px;
      outline: none;
 }
-.form-radio:checked::before
+.form-radio:checked::before, .form-checkbox:checked::before
 {
      position: absolute;
      font: 13px/1 'Open Sans', sans-serif;
@@ -116,14 +125,15 @@ input:focus {
      content: '\02143';
      transform: rotate(40deg);
 }
-.form-radio:hover
+.form-radio:hover, .form-chekcbox:hover
 {
      background-color: #f7f7f7;
 }
-.form-radio:checked
+.form-radio:checked, .form-checkbox:checked
 {
      background-color: #f1f1f1;
 }
+
 label
 {
      font: 300 16px/1.7 'Open Sans', sans-serif;
@@ -135,13 +145,14 @@ label
     width: 100%;
 }
 
+
 td {
     padding: 20px 0px 30px 0px;
 }
 
 /*Settings Icon*/
 
-#settings-container {
+#settings-btn {
     background: #39434e;
     position: absolute;
     top: 20px;
@@ -152,7 +163,153 @@ td {
 
 }
 .fa-sliders-h {
-
     color: white;
     font-size: 20px;
+}
+
+/* Settings Stuff 
+.settings {
+    display: none;
+}*/
+.settings-overlay {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: rgb(57,67,78);
+    opacity: .75;
+    display: block;
+}
+
+.settings .main-content {
+    position: absolute;
+    top: 0;
+    background: white;
+    z-index: 50;
+    opacity: 1;
+    height: 550px;
+}
+
+.settings .content {
+    text-align: left;
+    overflow: scroll;
+    height: 470px;
+}
+
+.btn-abs {
+    position: absolute;
+}
+
+.btn {
+    margin: 0 auto;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font: 300 22px/1.7 'Open Sans', sans-serif;
+    color: white;
+}
+
+.cancel-btn {
+    right: 10px;
+    width: 23px;
+    height: 23px;
+    padding: 12px;
+}
+
+.cancel-btn .fa-times{
+    font-size: 14pt;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    left: 0px;
+}
+
+.add-server {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    padding: 12px;
+    margin:10px;
+}
+
+.add-server .fa-plus{
+    position: relative;
+    top: -7px;
+    right: 10px;
+    left: 2px;
+}
+
+.remove-server {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    padding: 12px;
+    margin:10px;
+}
+
+.remove-server .fa-minus{
+    position: relative;
+    top: -6px;
+    right: 10px;
+    left: 2px;
+}
+
+.success {
+    background: #3c763d;
+}
+
+.failure {
+    background: #a94442;
+}
+.save-btn {
+    right: 65px;
+    padding: 12px;
+    width: 23px;
+    height: 23px;
+    padding: 12px;
+}
+
+.save-btn .fa-check {
+    font-size: 14pt;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    left: 0px;
+}
+
+.settings h1 {
+    display: inline-block;
+}
+.settings .cancel-btn p{
+    margin: 0;
+    margin-top: -8px;
+    margin-left: -1px;
+}
+
+.settings-text, .settings input[type="password"] {
+    background: #f1f1f1;
+    border-radius: 20px;
+    height: 40px;
+    margin: 0;
+    width: 95%;
+    margin-top: 5px;
+    margin-bottom: 35px;
+    text-align:left;
+    padding-left:5%;
+    border: none;
+    font: 300 22px/1.7 'Open Sans', sans-serif;
+
+}
+
+.settings .main-content {
+    margin-top: 30px !important;
+}
+
+/* Scrollbar Settings */
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+::-webkit-scrollbar-thumb {
+    background: #39434e !important
 }

@@ -64,6 +64,7 @@ var settings = {
 
     upload_ftps: {
         /*1: {
+            disabled: flase,
             name: "Canada FTP",
             host: "216.251.155.90",
             user: "shawn",
@@ -72,6 +73,7 @@ var settings = {
             aud_dir: "/"
         },*/
         2: {
+            disabled: false, 
             name: "Texas FTP",
             host: "12.247.246.50",
             user: "william",
