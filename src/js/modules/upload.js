@@ -1,5 +1,5 @@
 const ftp = require('basic-ftp')
-const config = require('../config')
+const config = require('../../../settings.json')
 const fs = require('fs')
 
 module.exports = upload
@@ -85,15 +85,16 @@ async function upload(title) {
                     //If Debug is on verbose the output of the ftp happenings
                     client.ftp.verbose = true
 
-                    //acutally downloading
+                    //acutally uploading
                     await client.upload(fs.createReadStream(video_dir), video_file)
 
                     
 
                 } catch(err) {
 
+                
                     //tell us if there is an error
-                    log('Video Upload Error ' + err)
+                    log('Video Upload Error ' + JSON.stringify(err))
                 } finally {
                     await client.close() //cleaning up
                 }
@@ -101,6 +102,8 @@ async function upload(title) {
 
                 //If there is no video file....
                 log('Error No Video File To Upload')
+
+                log(video_dir)
             }
 
 

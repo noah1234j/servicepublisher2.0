@@ -1,5 +1,5 @@
 const fs = require('fs')
-const config = require('../config')
+const config = require('../../../settings.json')
 
 module.exports = () => {
     //Assures the dirs are in place

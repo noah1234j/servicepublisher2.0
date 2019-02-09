@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../../../settings.json')
 const fs = require('fs')
 var cp = require('child_process')
 var $ = require('jquery')
@@ -40,20 +40,20 @@ async function encode(title) {
             //If it's started and not stopped
             if (started && (!fs.existsSync(config.video.pre_ptf + title + config.video.pre_filter))) {
 
-
-
+                setTimeout(() => {
                 //Look for the source file being moved
                 log ('\nEncode Finished')
 
-                //Stops this interval
-                clearInterval(interval)
-
                 //Alows the promise to be fulfilled
                 resolve("done")
+                }, 1000)
+
+                //Stops this interval
+                clearInterval(interval)
             }
         }, 100)
     })
     
     //Allows the main to move on to the next function only after we are done
-    return(await done)
+    return( await done )
 }

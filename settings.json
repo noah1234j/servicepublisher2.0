@@ -1,0 +1,45 @@
+{
+  "osDynamic": true,
+  "debug": false,
+  "encoder": "start C:/\"Program Files\"/Adobe/\"Adobe Media Encoder CC 2018\"/\"Adobe Media Encoder.exe\"",
+  "audio": {
+    "pre_filter": ".wav",
+    "post_filter": ".mp3",
+    "pre_ptf": "C:\\Users\\noaha\\Documents\\02_audio_capture\\",
+    "post_ptf": "C:\\Users\\noaha\\Documents\\03_audio_encodes\\",
+    "upload_ptf": "C:\\Users\\noaha\\Documents\\03_audio_encodes\\Uploaded\\"
+  },
+  "video": {
+    "pre_filter": ".mov",
+    "post_filter": ".mp4",
+    "pre_ptf": "C:\\Users\\noaha\\Documents\\04_video_capture\\",
+    "post_ptf": "C:\\Users\\noaha\\Documents\\05_video_encodes\\",
+    "upload_ptf": "C:\\Users\\noaha\\Documents\\05_video_encodes\\Uploaded\\"
+  },
+  "download_enabled": true,
+  "download_ftp": {
+    "host": "192.168.10.55",
+    "dir": "2",
+    "filter": ".mov"
+  },
+  "upload_ftps": {
+    "0": {
+      "disabled": true,
+      "name": "Example Server Name",
+      "host": "127.0.0.1",
+      "user": "username",
+      "pass": "password",
+      "vid_dir": "/Vid/Upload/Dir/",
+      "aud_dir": "/Aud/Upload/Dir/"
+    },
+    "1": {
+      "disabled": false,
+      "name": "Texas FTP",
+      "host": "192.168.10.25",
+      "user": "william",
+      "pass": "Amaz0nSe%",
+      "vid_dir": "/01_Video/01 Services",
+      "aud_dir": "/02_Audio/01_Services"
+    }
+  }
+}

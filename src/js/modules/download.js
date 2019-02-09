@@ -1,5 +1,5 @@
 const ftp = require('basic-ftp')
-const config = require('../config')
+const config = require('../../../settings.json')
 const fs = require('fs')
 const $ = require('jquery')
 

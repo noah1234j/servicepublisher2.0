@@ -1,0 +1,44 @@
+{
+    "debug": true,
+    "encoder": "refer to bottom",
+    "audio": {
+        "pre_filter": ".wav",
+        "post_filter": ".mp3",
+        "pre_ptf": "refer to bottom, set dynamically based on os",       
+        "post_ptf": "refer to bottom, set dynamically based on os",
+        "upload": "refer to bottom"
+    },
+    "video": {
+        "pre_filter": ".mov",
+        "post_filter": ".mp4",
+        "pre_ptf": "refer to bottom, set dynamically based on os",
+        "post_ptf": "refer to bottom, set dynamically based on os",
+        "upload_ptf": "refer to bottom"
+    },
+    "download_enabled": true,
+    "download_ftp": {
+        "host": "192.168.10.55",
+        "dir": "2",
+        "filter": ".mov"
+    },
+    "upload_ftps": {
+        "1": {
+            "disabled": true,
+            "name": "Canada FTP",
+            "host": "216.251.155.90",
+            "user": "shawn",
+            "pass": "wolt777",
+            "vid_dir": "/FTP-Share/2-Video/1-Services",
+            "aud_dir": "/"
+        },
+        "2": {
+            "disabled": false, 
+            "name": "Texas FTP",
+            "host": "12.247.246.50",
+            "user": "william",
+            "pass": "Amaz0nFr%",
+            "vid_dir": "/02_Video/01_services/",
+            "aud_dir": "/01_Audio/"
+        }
+    }
+}

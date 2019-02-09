@@ -18,8 +18,8 @@
               <h1>Service Uploader</h1> 
       </div>
       <div class="content">
-        <input type="text" id="sermonTitle" required placeholder="Service Name">
-        <input type="text" id="speakerInitials" required placeholder="Speaker Initials"><br>
+        <input type="text" id="sermonTitle" class="settings-text" required placeholder="Service Name">
+        <input type="text" id="speakerInitials" class="settings-text" required placeholder="Speaker Initials"><br>
         <table class="radio-table">
               <tr>
                   <td><input type="radio" name="demo" value="AM" class="form-radio" ><label for="radio-one">AM</label></td>
@@ -48,82 +48,88 @@
 
         </div>
         <div class="content">
+          <br><br><br><br>
+          <label>Set some settings dynamically based on os.</label>
+          <br>
 
           <h3>//Location Settings</h3>
 
-          <label for="settings-text">Meida Encoder Location</label>
-          <input type="text" class="settings-text" placeholder="/home/app/media encoder">
+          <label>Meida Encoder Location</label>
+          <input type="text" id="mediaEncoderLocation" class="settings-text dynamic">
 
-          <label for="settings-text">Audio Pre Encode</label>
-          <input type="text" class="settings-text">
+          <label>Audio Pre Encode</label>
+          <input type="text" id="audioPreEncodeLocation" class="settings-text dynamic">
           
-          <label for="settings-text">Audio Post Encode</label>
-          <input type="text" class="settings-text">
+          <label>Audio Post Encode</label>
+          <input type="text" id="audioPostEncodeLocation" class="settings-text dynamic">
 
-          <label for="settings-text">Video Pre Encode</label>
-          <input type="text" class="settings-text">
+          <label>Video Pre Encode</label>
+          <input type="text" id="videoPreEncodeLocation" class="settings-text dynamic">
 
-          <label for="settings-text">Video Post Encode</label>
-          <input type="text" class="settings-text">
+          <label>Video Post Encode</label>
+          <input type="text" id="videoPostEncodeLocation" class="settings-text dynamic">
           
           <h3>//File Settings</h3>
 
-          <label for="settings-text">Audio Pre Encode</label>
-          <input type="text" class="settings-text" placeholder=".wav">
+          <label>Audio Pre Encode</label>
+          <input type="text" id="audioPreEncodeFilter" class="settings-text">
 
-          <label for="settings-text">Audio Post Encode</label>
-          <input type="text" class="settings-text" placeholder=".mp3">
+          <label>Audio Post Encode</label>
+          <input type="text" id="audioPostEncodeFilter" class="settings-text">
           
-          <label for="settings-text">Audio Post Encode</label>
-          <input type="text" class="settings-text" placeholder=".mov">
+          <label>Video Pre Encode</label>
+          <input type="text" id="videoPreEncodeFilter" class="settings-text">
 
-          <label for="settings-text">Video Pre Encode</label>
-          <input type="text" class="settings-text" placeholder=".mp4">
+          <label>Video Post Encode</label>
+          <input type="text" id="videoPostEncodeFilter" class="settings-text">
 
           <h3>//Admin Settings</h3>
 
-          <label for="check-one">Debug</label><input type="checkbox" class="form-checkbox" id="check-one">
-
+          <label>Debug</label>
+          <input type="checkbox" id="debug" class="form-checkbox" id="check-one">
+          <br>
 
           <h3>//Hyperdeck Settings</h3>
 
           <label for="settings-text">Host</label>
-          <input type="text" class="settings-text" placeholder="192.168.10.123">
+          <input type="text" id="hyperdeckHost" class="settings-text">
 
           <label for="settings-text">Directory</label>
-          <input type="text" class="settings-text" placeholder="/2">
+          <input type="text" id="hyperdeckHomeDir" class="settings-text">
 
           <label for="settings-text">Download Filter</label>
-          <input type="text" class="settings-text" placeholder=".mov">
+          <input type="text" id="hyperdeckDownloadFilter" class="settings-text">
 
           
           <h3>//Servers</h3>
 
           <div class="servers">
             <h5>//Server 1</h5>
+             <div class="server1">
+                <label for="settings-text">Name</label>
+                <input type="text" class="settings-text serverName" placeholder=".wav">
 
-            <label for="settings-text">Name</label>
-            <input type="text" class="settings-text" placeholder=".wav">
+                <label for="check-one">Enabled</label>
+                <input type="checkbox" class="form-checkbox serverEnabled" id="check-one"><br><br>
 
-            <label for="check-one">Enabled</label><input type="checkbox" class="form-checkbox" id="check-one"><br><br>
+                <label for="settings-text">Host</label>
+                <input type="text" class="settings-text serverHost" placeholder=".mp3">
+                
+                <label for="settings-text">User</label>
+                <input type="text" class="settings-text serverUser" placeholder=".mov">
 
-            <label for="settings-text">Host</label>
-            <input type="text" class="settings-text" placeholder=".mp3">
-            
-            <label for="settings-text">User</label>
-            <input type="text" class="settings-text" placeholder=".mov">
+                <label for="settings-text">Password</label>
+                <input type="password" class="settings-text serverPass" placeholder=".mp4">
 
-            <label for="settings-text">Password</label>
-            <input type="password" class="settings-text" placeholder=".mp4">
+                <label for="settings-text">Video Directory</label>
+                <input type="text" class="settings-text serverVidDir" placeholder=".mp4">
 
-            <label for="settings-text">Video Directory</label>
-            <input type="text" class="settings-text" placeholder=".mp4">
+                <label for="settings-text">Audio Directory</label>
+                <input type="text" class="settings-text serverAudDir" placeholder=".mp4">
 
-            <label for="settings-text">Audio Directory</label>
-            <input type="text" class="settings-text" placeholder=".mp4">
-
-            <div class="btn add-server success"><i class="fas fa-plus"></i></div>
-            <div class="btn remove-server failure"><i class="fas fa-minus"></i></div>
+                <div class="btn add-server success"><i class="fas fa-plus"></i></div>
+                <div class="btn remove-server failure"><i class="fas fa-minus"></i></div>
+             </div>
 
           </div>
 
@@ -134,7 +140,7 @@
   <!--Scripts-->
     <script>
       require('./settings.js')
-      //require('./app.js') 
+      require('./app.js') 
     </script>
 </body>
 </html>
