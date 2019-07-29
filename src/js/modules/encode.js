@@ -32,7 +32,7 @@ async function encode(title) {
                     //When we get a .tmp file set started to true
                     if ((!started) && files[n].endsWith(".tmp")) {
                         started = true
-                        log("\nStarted Encode")
+                        log("\nEncoding")
                     }
                 }
             })
@@ -42,7 +42,7 @@ async function encode(title) {
 
                 setTimeout(() => {
                 //Look for the source file being moved
-                log ('\nEncode Finished')
+                log ('Success')
 
                 //Alows the promise to be fulfilled
                 resolve("done")

@@ -4,7 +4,7 @@ const config = require('../../../settings.json')
 //Rename service audio and video
 exports.video = (title) => {
 
-    console.log("\nRenaming Files....")
+    log("\nRenaming Video")
 
     //Video... Grabs any mov files in the dir
     fs.readdir(config.video.pre_ptf, (err, files) => {
@@ -24,6 +24,8 @@ exports.video = (title) => {
 
                     //Renames to sermon title
                     fs.rename(config.video.pre_ptf + file, config.video.pre_ptf + title + config.video.pre_filter, (err) => {if (err) {throw err}})
+
+                    log("Success")
                 }
             })
         }
@@ -34,6 +36,8 @@ exports.video = (title) => {
 
 exports.audio = (title) => {
 
+    log("\nRenaming Audio")
+try {
     //Audio... Grabs any wavs files in the dir
     fs.readdir(config.audio.pre_ptf, (err, files) => {
 
@@ -48,10 +52,12 @@ exports.audio = (title) => {
                 //Filters out everything but wavs
                 if (file.endsWith(config.audio.pre_filter)) {
 
-                    console.log("\nRenaming Audio File " + file)
+                    //console.log("\nRenaming Audio File " + file)
 
                     //Renames to sermon title
-                    fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter, (err) => {if (err) {throw err}})
+                    fs.rename(config.audio.pre_ptf + file, config.audio.pre_ptf + title + config.audio.pre_filter, (err) => {if (err) {log("Error: " + err )}})
+
+                    log("Success")
                 }
             })
             
@@ -60,4 +66,8 @@ exports.audio = (title) => {
 
     })
     return true
+
+} catch (err) {
+    log("Error: " + err)
+}
 }

@@ -17,7 +17,7 @@ module.exports = () => {
             throw "Please Enter Valid Parameters"
         } else {
             let title = thisDate + "-" + amPm.toUpperCase() + "-" + speakerInitials.toUpperCase() + "-" + sermonTitle + "-Texas"
-            log(title)
+            log("Service Title is: " + title)
             return title
         }
     } catch (err) {

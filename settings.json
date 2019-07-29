@@ -1,18 +1,17 @@
 {
-  "osDynamic": true,
-  "debug": false,
+  "debug": true,
   "encoder": "start C:/\"Program Files\"/Adobe/\"Adobe Media Encoder CC 2018\"/\"Adobe Media Encoder.exe\"",
   "audio": {
     "pre_filter": ".wav",
     "post_filter": ".mp3",
-    "pre_ptf": "C:\\Users\\noaha\\Documents\\02_audio_capture\\",
+    "pre_ptf": "\\\\woltmacbook\\02_audio_capture\\",
     "post_ptf": "C:\\Users\\noaha\\Documents\\03_audio_encodes\\",
     "upload_ptf": "C:\\Users\\noaha\\Documents\\03_audio_encodes\\Uploaded\\"
   },
   "video": {
     "pre_filter": ".mov",
     "post_filter": ".mp4",
-    "pre_ptf": "C:\\Users\\noaha\\Documents\\04_video_capture\\",
+    "pre_ptf": "D:\\Video Capture\\",
     "post_ptf": "C:\\Users\\noaha\\Documents\\05_video_encodes\\",
     "upload_ptf": "C:\\Users\\noaha\\Documents\\05_video_encodes\\Uploaded\\"
   },
@@ -31,15 +30,34 @@
       "pass": "password",
       "vid_dir": "/Vid/Upload/Dir/",
       "aud_dir": "/Aud/Upload/Dir/"
-    },
+    }, 
     "1": {
+      "disabled": false,
+      "name": "CDN",
+      "host": "198.7.27.225",
+      "user": "william@wolt.ca",
+      "pass": "Amaz0nEd%",
+      "vid_dir": "/secured/Media/Services/",
+      "aud_dir": "/secured/Media/Services/"
+    },
+    "2": {
+      "disabled": false,
+      "name": "Edmonton FTP",
+      "host": "216.251.155.90",
+      "user": "shawn",
+      "pass": "wolt777",
+      "vid_dir": "/FTP-Share/2-Video/1-Services/",
+      "aud_dir": "/FTP-Share/1-Audio/"
+    },
+    "3": {
       "disabled": false,
       "name": "Texas FTP",
       "host": "192.168.10.25",
       "user": "william",
-      "pass": "Amaz0nSe%",
+      "pass": "Amaz0nFr%",
       "vid_dir": "/01_Video/01 Services",
       "aud_dir": "/02_Audio/01_Services"
-    }
+    },
+
   }
 }

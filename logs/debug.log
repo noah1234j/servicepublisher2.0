@@ -1,30 +1,29 @@
-Start Time 12:49
-2019-02-09-PM-TEST-This is a test-Texas
+Start Time 14:36
+Service Title is: 2019-07-28-AM-TS-Redemption is Reversal-Texas
 
+Renaming Audio
 
-Blackmagic HyperDeck Studio Mini[0000].mov found to be downlaoded. Starting download now.
+Renaming Video
+Success
+Success
 
+Encoding
+Success
 
-0%
-17.59%
-36.05%
-54.46%
-72.94%
-91.38%
-100%
+Preparing Upload
 
-Started Encode
-
-Encode Finished
-
- Preparing Upload
-Error No Audio File to Upload
+Audio Upload to Texas FTP
+Success
 
 Video Upload to Texas FTP
+Success
 
-Video Move Done
+Video Move
+Success
 
- No audio moved to \Uploads because the file didn't exist
-Ended at 12:49
-Total time used 0:0
+Audio Move
+Success
+Ended at 15:50
+Time used 01:14
+null
 null

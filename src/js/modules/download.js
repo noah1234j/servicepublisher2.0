@@ -64,14 +64,14 @@ module.exports = () => {
 
                 //This is the progress tracker and progress bar updater see basic ftp docs for more info
                 client.trackProgress((info) => {
-                    //Gives the downloading message
-                    $('#name').text('Downloading...')
+                    // //Gives the downloading message
+                    // $('#name').text('Downloading...')
 
-                    //Gets the percent complete
-                    var percent = (Math.round(info.bytesOverall/file_size * 10000)/100).toString() + "%" // Gets the percent
-                    log(percent)
-                    $('#percent').text(percent)
-                    $('#progress').css('width', percent)
+                    // //Gets the percent complete
+                    // var percent = (Math.round(info.bytesOverall/file_size * 10000)/100).toString() + "%" // Gets the percent
+                    // log(percent)
+                    // $('#percent').text(percent)
+                    // $('#progress').css('width', percent)
 
                 })
 

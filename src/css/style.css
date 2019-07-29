@@ -97,14 +97,17 @@ input:focus {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-#progress p {
+#progress-bar p {
     display: inline;
     color: #39434e;
     font-family: 'Open Sans';
     font-weight: bold;
     padding: 0px;
     text-align: left;
-    margin-left: 20px
+    margin-left: 20px;
+    z-index: 2;
+    position: relative;
+    top: 60px;
 }
 
 /*Radio Button Stuff */

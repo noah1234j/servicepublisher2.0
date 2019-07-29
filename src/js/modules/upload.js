@@ -6,7 +6,7 @@ module.exports = upload
 
 //sets up the upload
 async function upload(title) {
-    log("\n Preparing Upload")
+    log("\nPreparing Upload")
 
     // loops through each server
     for (var server in config.upload_ftps) {
@@ -54,8 +54,9 @@ async function upload(title) {
                     await client.cd(aud_dir)
 
                     //acutally upload
-                    await client.upload(fs.createReadStream(video_dir), video_file)
+                    await client.upload(fs.createReadStream(audio_dir), audio_file)
 
+                    log("Success")
                 } catch(err) {
 
                     //tell us if there is an error
@@ -88,7 +89,7 @@ async function upload(title) {
                     //acutally uploading
                     await client.upload(fs.createReadStream(video_dir), video_file)
 
-                    
+                    log('Success')
 
                 } catch(err) {
 
@@ -105,25 +106,25 @@ async function upload(title) {
 
                 log(video_dir)
             }
-
-
         }
     }
 
     //Moving the audio and video to the /Uploaded dir
     //Vid
     if (fs.existsSync(video_dir)) {
-    fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
-    log('\nVideo Move Done')
+        log('\nVideo Move')
+        fs.rename(video_dir, config.video.post_ptf + "Uploaded/" + title + config.video.post_filter, err => log(err))
+        log("Success")
     } else {
-        log('\n No video moved to \\Uploads because the file didn\'t exist')
+        log('\nError: No video moved to \\Uploads because the file didn\'t exist')
     }
 
     //Aud
     if (fs.existsSync(audio_dir)) {
+        log('\nAudio Move')
         fs.rename(audio_dir, config.audio.post_ptf + "Uploaded/" + title + config.audio.post_filter, err => log(err))
-        log('\nAudio Move Done')
+        log("Success")
     } else {
-        log('\n No audio moved to \\Uploads because the file didn\'t exist')
+        log('\nError: No audio moved to \\Uploads because the file didn\'t exist')
     }
 }
