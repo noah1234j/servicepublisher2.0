@@ -1,5 +1,5 @@
-Start Time 14:36
-Service Title is: 2019-07-28-AM-TS-Redemption is Reversal-Texas
+Start Time 21:24
+Service Title is: 2019-07-28-PM-TS-Language of Redemption-Texas
 
 Renaming Audio
 
@@ -12,6 +12,18 @@ Success
 
 Preparing Upload
 
+Audio Upload to CDN
+Success
+
+Video Upload to CDN
+Video Upload Error {"error":{"info":"socket timeout","ftpSocket":"control"}}
+
+Audio Upload to Edmonton FTP
+Audio Upload Error {"error":{"info":"socket timeout","ftpSocket":"control"}}
+
+Video Upload to Edmonton FTP
+Video Upload Error {"error":{"info":"socket timeout","ftpSocket":"control"}}
+
 Audio Upload to Texas FTP
 Success
 
@@ -23,7 +35,7 @@ Success
 
 Audio Move
 Success
-Ended at 15:50
-Time used 01:14
+Ended at 22:34
+Time used 01:10
 null
 null
